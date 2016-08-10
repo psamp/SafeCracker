@@ -12,20 +12,21 @@
 int takeInAString(char*);
 void getNewCombination(int* combination);
 void gameplay(void);
+void takeInCombonationGuess(int* guesses);
 
 int main(int argc, const char * argv[]) {
     
     char user[30] = {'\0'};
     int scannedUsersNameSuccesfully = -1;
     
-    printf("Welcome to SafeCracker! If you guess the code to an evil billionaire's safe, everything inside is yours\nYou have 3 chances to guess correctly.\nSo we know who to make the check out to in the event you guess correctly, please tell us your name.\n");
-    printf("Enter name:\n");
+    printf("Welcome to SafeCracker! If you guess the code to an evil billionaire's safe, all the riches within are yours\nYou have 3 chances to guess correctly.\nSo we know who to make the check out to in the event you guess correctly, please tell us your name.\n\n");
+    printf("Enter name:\n\n");
     
     while (scannedUsersNameSuccesfully != 1) {
         scannedUsersNameSuccesfully = takeInAString(user);
     }
     
-    printf("Nice to meet you, %s\n.", user);
+    printf("Nice to meet you, %s.\n\n", user);
     
     gameplay();
     
@@ -45,12 +46,33 @@ void getNewCombination(int* combination){
     for (int i = 0; i < 5; i++) {
         combination[i] = arc4random_uniform(4);
     }
+    
+}
 
+void guessCombination(int* guessedCombination) {
+    int tookInGuessesSuccessfully = -1;
+    
+    printf("Alright, time to guess.\n");
+    
+    while (tookInGuessesSuccessfully != 4) {
+        fpurge(stdin);
+        printf("Enter 4 numbers between 0 and 3, seperated by hyphens.\nExample: 0-1-2-3\nEnter:\n\n");
+        
+        tookInGuessesSuccessfully = scanf("%d-%d-%d-%d",&guessedCombination[0], &guessedCombination[1], &guessedCombination[2], &guessedCombination[3]);
+    }
+    
 }
 
 void gameplay() {
     
     int combination[4] = {0};
     getNewCombination(combination);
-
+    
+    int timesGuessed = 0;
+    int guessedCombination[4] = {0};
+    
+    while (timesGuessed != 3) {
+        guessCombination(guessedCombination);
+        timesGuessed++;
+    }
 }
