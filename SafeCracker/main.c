@@ -28,19 +28,30 @@ int main(int argc, const char * argv[]) {
     
     printf("Nice to meet you, %s.\n\n", user);
     
-    int combination[4] = {0};
+    int combination[4] = {[0 ... 3] = -1};
     getNewCombination(combination);
+    char combinationString[4] = {[0 ... 3] = -1};
+    
+    for (int i = 0; i < 4; i++) {
+        combinationString[i] = combination[i] + '0';
+    }
     
     int timesGuessed = 0;
     int guessedCombination[4] = {0};
+    
     int correctGuesses[4] = {[0 ... 3] = -1};
+    int howManyCorrectGuesses = 0;
+    
     
     while (timesGuessed <= 2) {
+        
+        printf("COMBINATION: %s\n\n", combinationString);
+        
         guessCombination(guessedCombination);
         
-        /*if (guessedCombination[0] == p) {
-            <#statements#>
-        }*/
+        /*if ((char) guessedCombination[0] == 'p') {
+         
+         }*/
         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -51,9 +62,16 @@ int main(int argc, const char * argv[]) {
         }
         
         timesGuessed++;
-        
-        printf("TIMESGUESSED: %d", timesGuessed);
     }
+    
+    for (int i = 0; i < 4; i++) {
+        if(correctGuesses[i] != -1) {
+            howManyCorrectGuesses++;
+        }
+    }
+    
+    printf("COMBONATION: %s\nYou guessed %d/4 digits! You're rich!\n", combinationString, howManyCorrectGuesses);
+    
     
     return 0;
 }
