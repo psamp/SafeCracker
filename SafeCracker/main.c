@@ -35,8 +35,12 @@ int main(int argc, const char * argv[]) {
     int guessedCombination[4] = {0};
     int correctGuesses[4] = {[0 ... 3] = -1};
     
-    while (timesGuessed <= 3) {
+    while (timesGuessed <= 2) {
         guessCombination(guessedCombination);
+        
+        /*if (guessedCombination[0] == p) {
+            <#statements#>
+        }*/
         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -47,6 +51,8 @@ int main(int argc, const char * argv[]) {
         }
         
         timesGuessed++;
+        
+        printf("TIMESGUESSED: %d", timesGuessed);
     }
     
     return 0;
