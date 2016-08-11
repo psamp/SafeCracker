@@ -11,7 +11,7 @@
 
 int takeInAString(char*);
 void getNewCombination(int* combination);
-void gameplay(void);
+void guessCombination(int* guessedCombination);
 void takeInCombonationGuess(int* guesses);
 
 int main(int argc, const char * argv[]) {
@@ -28,7 +28,26 @@ int main(int argc, const char * argv[]) {
     
     printf("Nice to meet you, %s.\n\n", user);
     
-    gameplay();
+    int combination[4] = {0};
+    getNewCombination(combination);
+    
+    int timesGuessed = 0;
+    int guessedCombination[4] = {0};
+    int correctGuesses[4] = {[0 ... 3] = -1};
+    
+    while (timesGuessed <= 3) {
+        guessCombination(guessedCombination);
+        
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if(guessedCombination[i] == combination[j]) {
+                    correctGuesses[i] = guessedCombination[i];
+                }
+            }
+        }
+        
+        timesGuessed++;
+    }
     
     return 0;
 }
@@ -52,8 +71,6 @@ void getNewCombination(int* combination){
 void guessCombination(int* guessedCombination) {
     int tookInGuessesSuccessfully = -1;
     
-    printf("Alright, time to guess.\n");
-    
     while (tookInGuessesSuccessfully != 4) {
         fpurge(stdin);
         printf("Enter 4 numbers between 0 and 3, seperated by hyphens.\nExample: 0-1-2-3\nEnter:\n\n");
@@ -61,18 +78,4 @@ void guessCombination(int* guessedCombination) {
         tookInGuessesSuccessfully = scanf("%d-%d-%d-%d",&guessedCombination[0], &guessedCombination[1], &guessedCombination[2], &guessedCombination[3]);
     }
     
-}
-
-void gameplay() {
-    
-    int combination[4] = {0};
-    getNewCombination(combination);
-    
-    int timesGuessed = 0;
-    int guessedCombination[4] = {0};
-    
-    while (timesGuessed != 3) {
-        guessCombination(guessedCombination);
-        timesGuessed++;
-    }
 }
