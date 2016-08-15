@@ -12,17 +12,20 @@
 #include <string.h>
 
 int takeInAString(char*);
-void getNewCombination(int* combination);
+void getNewCombination(int* combination, int maxComboDigitValue);
 void takeInCombinationGuess(int* guessedCombination);
 bool compareIntArrays(int* a, int* b, int lengthOfArrays);
-void gameplay(void);
+void gameplay(int maxNumberGenerated);
 
 int main(int argc, const char * argv[]) {
     
     char user[30] = {'\0'};
-    int scannedUsersNameSuccesfully = -1;
+    int maxComboDigitValue = 3;
     
-    printf("Welcome to SafeCracker! If you guess the code to an evil billionaire's safe, all the riches within are yours.\nYou have 3 chances.\nSo we know who to make the check out to in the event you guess correctly, please tell us your name.\n\n");
+    int scannedUsersNameSuccesfully = -1;
+    int scannedMaxSafeComboDigitValue = -1;
+    
+    printf("Welcome to SafeCracker! If you guess the combination to an evil billionaire's safe, all the riches within are yours.\nYou have 3 chances.\nSo we know who to make the check out to in the event you guess correctly, please tell us your name.\n\n");
     printf("Enter name:\n\n");
     
     while (scannedUsersNameSuccesfully != 1) {
@@ -30,13 +33,18 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("Nice to meet you, %s.\n\n", user);
+    printf("Now, let's get crackin'. Please enter 3, or 9, this will represent the largest value a single digit in the safe's combo can have.\n\n");
     
-    gameplay();
+    while (scannedMaxSafeComboDigitValue != 1 || (maxComboDigitValue != 3 && maxComboDigitValue != 9)) {
+        scannedMaxSafeComboDigitValue = scanf("%d", &maxComboDigitValue);
+    }
+    
+    gameplay(maxComboDigitValue + 1);
     
     return 0;
 }
 
-void gameplay() {
+void gameplay(int maxComboDigitValue) {
     int combination[4] = {[0 ... 3] = -1};
     
     int timesUserHasGuessed = 0;
@@ -46,12 +54,8 @@ void gameplay() {
     
     bool guessing = true;
     
-    getNewCombination(combination);
+    getNewCombination(combination, maxComboDigitValue);
     
-    printf("Combination: ");
-    for (int i = 0; i < 4; i++) {
-        printf("%d", combination[i]);
-    }
     printf("\n\n");
     
     while (guessing) {
@@ -122,10 +126,10 @@ int takeInAString(char* destinationVariable) {
     return itemsScanned;
 }
 
-void getNewCombination(int* combination){
+void getNewCombination(int* combination, int maxComboDigitValue){
     
     for (int i = 0; i < 4; i++) {
-        combination[i] = arc4random_uniform(4);
+        combination[i] = arc4random_uniform(maxComboDigitValue);
     }
     
 }
