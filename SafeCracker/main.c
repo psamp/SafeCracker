@@ -77,7 +77,7 @@ void gameplay(int maxComboDigitValue) {
             
         } else {
             
-            printf("You tried! These are the digits you guessed correctly, and they feature somewhere in the safe combo. But not nessasarily the same amount of times, or in the same order.\n\n");
+            printf("You tried! These are the digits you guessed correctly, and they feature somewhere in the safe combo. But not necessarily the same amount of times, or in the same order.\n\n");
             
             for (int i = 0; i < 4; i++) {
                 if (digitsGuessedThatAreInCombination[i] != -1) {
